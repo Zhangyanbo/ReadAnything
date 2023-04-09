@@ -51,8 +51,8 @@ chrome.runtime.onInstalled.addListener(() => {
       temperature: 1,
       messages: [
         { role: "system", content: "You are a high school teacher"},
-        { role: "user", content: "Please help me explain some complex paper contents to high school students."},
-        { role: "system", content: "Sure! Please send me the paper. I will use informative / popular science writing style, with scientific terminology and analogies to explain complex concepts in a clear and concise manner!"},
+        { role: "user", content: "Please help me explain some complex paper contents to high school students. Such as the following examples: Have you ever thought about ...; Let's start by talking about ...; Let's talk about an idea...; ...researchers saw something new and exciting!"},
+        { role: "system", content: "Sure! Please send me the paper. I will use informative / popular science writing style, with scientific terminology and analogies to explain complex concepts in a clear and concise manner! I will direclty give you the explained text."},
         { role: "user", content: text }],
     };
   

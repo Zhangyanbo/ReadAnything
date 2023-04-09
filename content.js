@@ -50,10 +50,15 @@ function showWaitingMessage() {
     // Create the close button
     const closeButton = document.createElement('button');
     closeButton.innerText = '⊗';
+    // set the inner text font size to 5mm
+    closeButton.style.fontSize = '5mm';
     // set text color to black
     closeButton.style.color = 'black';
     closeButton.style.position = 'absolute';
     closeButton.style.top = '0';
+    // set button with no border nor frame
+    closeButton.style.border = 'none';
+    closeButton.style.outline = 'none';
     // setting button height to 5mm
     closeButton.style.height = '5mm';
     // setting button background color to transparent

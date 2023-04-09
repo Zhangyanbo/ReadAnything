@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8">
     <style>
       body {
         width: 6cm;
-        height: 3.5cm;
+        height: 5cm;
         font-family: Arial, sans-serif;
       }
       input[type='text'] {
@@ -19,9 +20,17 @@
     <button id="save-api-key">Save</button>
     <!-- add a choice menu between two options: gpt-3.5-turbo and gpt-4 -->
     <h3>Model:</h3>
-    <select id="model-choose">
-      <option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
-      <option value="gpt-4">gpt-4</option>
+        <select id="model-choose">
+            <option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
+            <option value="gpt-4">gpt-4</option>
+        </select>
+    
+    <!-- add a choice menu between two options: English and 中文 -->
+    <h3>Language 语言:</h3>
+        <select id="language-choose">
+            <option value="en">English</option>
+            <option value="zh">中文</option>
+        </select>
     <script src="popup.js"></script>
   </body>
 </html>
