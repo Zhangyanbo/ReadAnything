@@ -21,8 +21,13 @@ function closeExistingPopup() {
 }
 
 // Show a waiting message in the popup
-function showWaitingMessage() {
-    showSimplifiedText('Waiting for OpenAI to respond...');
+async function showWaitingMessage() {
+    const lang = await getStoredLanguage();
+    if (lang == 'en') {
+        showSimplifiedText('Waiting for OpenAI to respond...');
+    } else if (lang == 'zh') {
+        showSimplifiedText('等待OpenAI服务器回应...');
+    }
 };
   
   function showSimplifiedText(simplifiedText) {
@@ -80,3 +85,11 @@ function showWaitingMessage() {
     document.body.appendChild(popup);
   }
   
+
+function getStoredLanguage() {
+    return new Promise((resolve, reject) => {
+        chrome.storage.sync.get(['language'], (result) => {
+        resolve(result.language);
+        });
+    });
+    }
