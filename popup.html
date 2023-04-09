@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        width: 6cm;
+        height: 3.5cm;
+        font-family: Arial, sans-serif;
+      }
+      input[type='text'] {
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>OpenAI API Key:</h3>
+    <!-- add a text input for the API key-->
+    <input type="password" id="api-key">
+    <button id="save-api-key">Save</button>
+    <!-- add a choice menu between two options: gpt-3.5-turbo and gpt-4 -->
+    <h3>Model:</h3>
+    <select id="model-choose">
+      <option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
+      <option value="gpt-4">gpt-4</option>
+    <script src="popup.js"></script>
+  </body>
+</html>
