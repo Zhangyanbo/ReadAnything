@@ -35,7 +35,7 @@ async function showWaitingMessage() {
     const popup = document.createElement('div');
     popup.id = 'simplified-text-popup';
     popup.style.position = 'fixed';
-    popup.style.top = '1cm';
+    popup.style.bottom = '1cm';
     popup.style.width = '10cm'
     popup.style.height = '15cm'
     // add scroll bar to the popup
