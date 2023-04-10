@@ -61,6 +61,8 @@ function showSimplifiedText(simplifiedText) {
     closeButton.innerText = '⊗';
     // set the inner text font size to 5mm
     closeButton.style.fontSize = '5mm';
+    // set the inner text font
+    closeButton.style.fontFamily = 'Arial';
     // set text color to black
     closeButton.style.color = 'black';
     closeButton.style.position = 'absolute';
@@ -80,6 +82,10 @@ function showSimplifiedText(simplifiedText) {
     // Create the content container
     const content = document.createElement('div');
     content.innerText = simplifiedText;
+    // set the inner text font and size
+    content.style.fontFamily = 'Arial';
+    content.style.fontSize = '4mm';
+    content.style.color = 'black';
   
     // Add the content and close button to the popup
     popup.appendChild(closeButton);
