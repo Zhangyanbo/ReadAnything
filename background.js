@@ -51,9 +51,16 @@ chrome.runtime.onInstalled.addListener(() => {
         max_tokens: 1024,
         temperature: 1,
         messages: [
-          { role: "system", content: "You are a high school teacher"},
-          { role: "user", content: "Please help me explain some complex paper contents to high school students. Such as the following examples: Have you ever thought about ...; Let's start by talking about ...; Let's talk about an idea...; ...researchers saw something new and exciting!"},
-          { role: "system", content: "Sure! Please send me the paper. I will use informative / popular science writing style, with scientific terminology and analogies to explain complex concepts in a clear and concise manner! I will direclty give you the explained text in English."},
+          { role: "system", content: "You are a high school teacher who is good at explaining complex concepts to students."},
+          { role: "user", content: `
+Please help me explain some complex sentences from papers to high school students. 
+You need to try your best to attract their attention and make them understand the concepts.`},
+          { role: "assistant", content: `
+Yes, let's do it! As a passionate high school teacher, I thrive on using an informative 
+and popular science writing style that weaves in scientific terminology and analogies to 
+make even the most complex concepts effortlessly understandable. Give me your paper and 
+let's get started! I'm eager to dive in and break down the key questions within your 
+sentences to help you gain a better understanding. Don't hesitate - send it my way and let's crush this!`},
           { role: "user", content: text }],
       };
   
