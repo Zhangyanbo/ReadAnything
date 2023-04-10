@@ -30,17 +30,21 @@ async function showWaitingMessage() {
     }
 };
   
-  function showSimplifiedText(simplifiedText) {
+function showSimplifiedText(simplifiedText) {
+    // Retrieve the last position from storage
+    chrome.storage.local.get(['popupBottom', 'popupRight'], (result) => {
+        const popupBottom = result.popupBottom || '1cm';
+        const popupRight = result.popupRight || '1cm';
     // Create the popup element
     const popup = document.createElement('div');
     popup.id = 'simplified-text-popup';
     popup.style.position = 'fixed';
-    popup.style.bottom = '1cm';
+    popup.style.bottom = popupBottom;
     popup.style.width = '10cm'
     popup.style.height = '15cm'
     // add scroll bar to the popup
     popup.style.overflow = 'auto';
-    popup.style.right = '1cm';
+    popup.style.right = popupRight;
     popup.style.backgroundColor = 'white';
     popup.style.border = '1px solid #ccc';
     popup.style.padding = '5mm';
@@ -83,7 +87,11 @@ async function showWaitingMessage() {
   
     // Add the popup to the page
     document.body.appendChild(popup);
-  }
+
+    // Make the popup draggable
+    makePopupDraggable(popup);
+    });
+}
   
 
 function getStoredLanguage() {
@@ -93,3 +101,46 @@ function getStoredLanguage() {
         });
     });
     }
+
+function makePopupDraggable(popup) {
+    let pos1 = 0,
+        pos2 = 0,
+        pos3 = 0,
+        pos4 = 0;
+    
+    popup.onmousedown = dragMouseDown;
+    
+    function dragMouseDown(e) {
+        // Check if the target is the popup
+        if (e.target === popup) {
+          e = e || window.event;
+          e.preventDefault();
+          pos3 = e.clientX;
+          pos4 = e.clientY;
+          document.onmouseup = closeDragElement;
+          document.onmousemove = elementDrag;
+        }
+      }
+    
+    function elementDrag(e) {
+        e = e || window.event;
+        e.preventDefault();
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        popup.style.bottom = `${document.documentElement.clientHeight - (popup.offsetTop + popup.offsetHeight) + pos2}px`;
+        popup.style.right = `${document.documentElement.clientWidth - (popup.offsetLeft + popup.offsetWidth) + pos1}px`;
+    }
+    
+    function closeDragElement() {
+        // Save the position in storage
+        chrome.storage.local.set({
+          popupRight: popup.style.right,
+          popupBottom: popup.style.bottom,
+        });
+    
+        document.onmouseup = null;
+        document.onmousemove = null;
+      }
+}
