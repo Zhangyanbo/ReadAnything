@@ -46,10 +46,7 @@ chrome.runtime.onInstalled.addListener(() => {
     const model = await getStoredModel();
 
     const lang = await getStoredLanguage();
-    let data;
-
-    if (lang === 'en') {
-      data = {
+    const data = {
         model: model,
         max_tokens: 1024,
         temperature: 1,
@@ -59,18 +56,6 @@ chrome.runtime.onInstalled.addListener(() => {
           { role: "system", content: "Sure! Please send me the paper. I will use informative / popular science writing style, with scientific terminology and analogies to explain complex concepts in a clear and concise manner! I will direclty give you the explained text in English."},
           { role: "user", content: text }],
       };
-    } else if (lang === 'zh') {
-      data = {
-        model: model,
-        max_tokens: 1024,
-        temperature: 1,
-        messages: [
-          { role: "system", content: "你是一个高中教师"},
-          { role: "user", content: "请帮我向高中生解释一些复杂的论文内容。 比如下面的例子：你有没有想过……； 让我们从……开始讨论吧； 我们来聊聊一个想法......; ...研究人员看到了令人兴奋的新事物！"},
-          { role: "system", content: "没问题！请把论文发给我。我将使用科普的写作风格，运用科学术语和类比，以清晰简洁的方式解释复杂的概念！我会直接给你解释后的中文文字。"},
-          { role: "user", content: text }],
-      };
-    }
   
     try {
       // Make a POST request to the OpenAI API
@@ -92,16 +77,69 @@ chrome.runtime.onInstalled.addListener(() => {
       const result = await response.json();
   
       // Extract the simplified text from the result (you may need to adjust this based on the API response structure)
-      const simplifiedText = result.choices && result.choices.length > 0
+      let simplifiedText = result.choices && result.choices.length > 0
         ? result.choices[0].message.content
         : 'No response from the API';
-  
+      
+      // Translate the simplified text to the selected language
+      if (lang !== 'en') {
+        simplifiedText = await translateText(simplifiedText, lang);
+      }
+      
       return simplifiedText;
     } catch (error) {
       console.error('Error calling OpenAI API:', error);
     }
   }
+
+async function translateText(text, lang) {
+    // Using GPT-3 to translate text to the selected language
+    const apiKey = await getStoredAPIKey();
+    const url = "https://api.openai.com/v1/chat/completions";
+    
+    let eng_data;
+    if (lang === 'zh') {
+      eng_data = {
+        model: 'gpt-3.5-turbo',
+        max_tokens: 1024,
+        temperature: 1,
+        messages: [
+          { role: "system", content: "You are a translator"},
+          { role: "user", content: "Translate the following text to Chinese: \n" + text}
+        ],
+      };
+    }
+
+    try {
+      // Make a POST request to the OpenAI API
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify(eng_data),
+      });
   
+      // Check if the response is successful (status code 200-299)
+      if (!response.ok) {
+        throw new Error(`OpenAI API request failed with status ${response.status}`);
+      }
+  
+      // Parse the response as JSON
+      const result = await response.json();
+  
+      // Extract the simplified text from the result (you may need to adjust this based on the API response structure)
+      let translated = result.choices && result.choices.length > 0
+        ? result.choices[0].message.content
+        : 'No response from the API';
+      
+      return translated;
+    } catch (error) {
+      console.error('Error calling OpenAI API:', error);
+    }
+
+  }  
   
   
 function getStoredAPIKey() {
