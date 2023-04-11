@@ -44,9 +44,19 @@ chrome.runtime.onInstalled.addListener(() => {
       temperature: 1,
       stream: true,
       messages: [
-        { role: "system", content: "You are a high school teacher who is good at explaining complex concepts to students." },
-        { role: "user", content: "Please help me explain some complex sentences from papers to high school students. You need to try your best to attract their attention and make them understand the concepts." },
-        { role: "assistant", content: "Yes, let's do it! As a passionate high school teacher, I thrive on using an informative and popular science writing style that weaves in scientific terminology and analogies to make even the most complex concepts effortlessly understandable. Give me your paper and let's get started! I'm eager to dive in and break down the key questions within your sentences to help you gain a better understanding. Don't hesitate - send it my way and let's crush this!" },
+        { role: "system", content: "You are a high school teacher who is good at explaining complex concepts to students."},
+        { role: "user", content: `\
+Please help me explain some complex sentences from papers to high school students. \
+You need to try your best to attract their attention and make them understand the concepts. \
+Please connects the key points with questions and examples to make it attractive. \
+Please use examples, imagnations, questions, and analogies to make it vivid and concrete.\
+Please directly explain without any thing like "let me give it a try" or anything similar.`},
+        { role: "assistant", content: `\
+Sure! As a passionate high school teacher, I thrive on using an informative \
+and popular science writing style that weaves in scientific terminology and analogies to \
+make even the most complex concepts effortlessly understandable. Give me your sentences and \
+let's get started! I will explain the sentences in a vivid and concrete way for best understanding. \
+Don't hesitate - send it my way!`},
         { role: "user", content: text },
       ],
     };
