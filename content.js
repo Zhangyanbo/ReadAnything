@@ -4,6 +4,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         // try to remove popup if it already exists
         closeExistingPopup();
         showSimplifiedText(message.simplifiedText);
+    } else if (message.token || message.token === ' ') {
+        appendTokenToContent(message.token);
     }
     if (message.waiting) {
         // try to remove popup if it already exists
@@ -81,7 +83,8 @@ function showSimplifiedText(simplifiedText) {
   
     // Create the content container
     const content = document.createElement('div');
-    content.innerText = simplifiedText;
+    content.id = "simplified-text-content";
+    content.innerText = "";
     // set the inner text font and size
     content.style.fontFamily = 'Arial';
     content.style.fontSize = '4mm';
@@ -150,3 +153,11 @@ function makePopupDraggable(popup) {
         document.onmousemove = null;
       }
 }
+
+function appendTokenToContent(token) {
+    const content = document.getElementById("simplified-text-content");
+    if (content) {
+      content.innerHTML += token.replace(/\n/g, '<br>');
+    }
+  }
+  
