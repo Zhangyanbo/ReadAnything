@@ -92,7 +92,6 @@ Don't hesitate - send it my way!`},
         const token = new TextDecoder("utf-8").decode(value);
   
         const content = extractContent(token);
-        console.log(content);
 
         // Send the content to the content script
         chrome.tabs.sendMessage(tabId, { token: content });
