@@ -79,6 +79,8 @@ function showSimplifiedText(simplifiedText) {
     closeButton.style.right = '0';
     closeButton.onclick = () => {
       document.body.removeChild(popup);
+      // send a message to background.js to stop the stream
+      chrome.runtime.sendMessage({ stopStream: true });
     };
   
     // Create the content container

@@ -127,6 +127,13 @@ async function readStream(data, apiKey, tabId) {
     // Process the stream
     while (true) {
       const { value, done } = await reader.read();
+      // stop the stram if chrome.runtime.sendMessage({ stopStream: true });
+      chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+        if (request.stopStream) {
+          reader.releaseLock();
+        }
+      });
+      
       if (done) {
         console.log("Done reading stream")
         // close the stream
