@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "ReadAnything",
     "description": "Read anything with the power of AI",
-    "version": "0.4.0",
+    "version": "0.5.0",
     "permissions": ["contextMenus", "storage"],
     "action": {
       "default_popup": "popup.html",
