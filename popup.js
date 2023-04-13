@@ -5,6 +5,14 @@ document.getElementById('save-api-key').addEventListener('click', () => {
     });
   });
 
+document.getElementById('reset-position').addEventListener('click', () => {
+    // get popup element by id = simplified-text-popup
+    chrome.storage.local.set({
+        popupRight: null,
+        popupBottom: null,
+      });
+});
+
 document.getElementById('model-choose').addEventListener('change', () => {
 const model = document.getElementById('model-choose').value;
 chrome.storage.sync.set({ model }, () => {
